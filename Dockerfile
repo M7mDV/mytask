@@ -1,15 +1,18 @@
-FROM alpine
+FROM alpine:latest
+
+
+RUN apk add --no-cache g++ curl make
 
 WORKDIR /app
 
-COPY index.js .
+
+COPY main.cpp .
 
 
-RUN apk add --update nodejs npm
+RUN g++ main.cpp -o myserver -pthread
 
 
-RUN npm install express
+EXPOSE 8080
 
 
-
-CMD node index.js 
+CMD ["./myserver"]
